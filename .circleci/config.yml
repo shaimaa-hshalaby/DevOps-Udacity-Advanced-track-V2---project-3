@@ -10,7 +10,7 @@ commands:
      steps:
       - run: 
          command: |
-            $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
 
@@ -19,10 +19,10 @@ commands:
       steps:
        - run: 
           command: |
-            $ sudo apt update
-            $ sudo apt install software-properties-common
-            $ sudo add-apt-repository --yes --update ppa:ansible/ansible
-            $ sudo apt install ansible
+            sudo apt update
+            sudo apt install software-properties-common
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
 
 
    notify_on_failure:
