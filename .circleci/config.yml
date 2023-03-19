@@ -5,6 +5,26 @@ orbs:
 
 
 commands:
+   install_aws_cli:
+     description: install AWS CLI
+     steps:
+      - run: 
+         command: |
+            $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+   install_ansible:
+      description: install AWS CLI
+      steps:
+       - run: 
+          command: |
+            $ sudo apt update
+            $ sudo apt install software-properties-common
+            $ sudo add-apt-repository --yes --update ppa:ansible/ansible
+            $ sudo apt install ansible
+
+
    notify_on_failure:
      steps:
        - slack/notify:
