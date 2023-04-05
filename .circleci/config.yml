@@ -246,6 +246,10 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update
       - install_aws_cli
       - run:
           name: Run migrations
