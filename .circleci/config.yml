@@ -240,12 +240,10 @@ jobs:
       # Here's where you will add some code to rollback on failure      
       - destroy-environment    
       - notify_on_failure
-
-
+      
   run-migrations:
     docker:
-     # - image: cimg/node:13.8.0
-      - image: python:3.9-alpine3.16
+      - image: cimg/node:13.8.0
     steps:
       # Checkout code from git
       - checkout
@@ -255,7 +253,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get update
-      - install_aws_cli
+            sudo apt-get install -y awscli
       - run:
           name: Run migrations
           command: |
