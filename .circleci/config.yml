@@ -209,11 +209,12 @@ jobs:
 
   configure-infrastructure:
     docker:
-       - image: cimg/base:stable
+       #- image: cimg/base:stable
+       - image: python:3.9-alpine3.16
     steps:
       # Checkout code from git
       - checkout    
-
+      - install_aws_cli
       # install ansible from the predefined command
       - install_ansible
 
@@ -224,11 +225,12 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       # Your code here
-      #       exit 1
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache tar gzip
+            pip install ansible awscli
+            apk add openssh-client
       - run:
           name: Configure server
           command: |
