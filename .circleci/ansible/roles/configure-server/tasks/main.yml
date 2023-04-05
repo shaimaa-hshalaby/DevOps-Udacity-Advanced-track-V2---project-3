@@ -6,12 +6,12 @@
         update_cache: yes
 
 
-  - name: "install node.js "
-    become: true
-    apt:
-      name: ["nodejs"]
-      state: latest
-      update_cache: yes
+    - name: "install node.js "
+      become: true
+      apt:
+        name: ["nodejs"]
+        state: latest
+        update_cache: yes
 
 
     - name: Install npm
@@ -20,10 +20,10 @@
         state: present
         
 
-  - name: "install pm2 globally"
-    npm:
-      name: pm2
-      global: yes
+    - name: "install pm2 globally"
+      npm:
+        name: pm2
+        global: yes
       
       
   
