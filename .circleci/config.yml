@@ -246,6 +246,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - restore_cache:
+          keys: [backend-dependencies]
       - run:
           name: Install dependencies
           command: |
@@ -256,6 +258,7 @@ jobs:
           command: |
             cd backend
             npm install
+            npm audit fix
             npm run migrations > migrations_dump.txt
             
       - run:
