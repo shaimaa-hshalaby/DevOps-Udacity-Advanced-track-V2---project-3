@@ -214,9 +214,9 @@ jobs:
     steps:
       # Checkout code from git
       - checkout    
-      - install_aws_cli
-      # install ansible from the predefined command
-      - install_ansible
+      # - install_aws_cli
+      # # install ansible from the predefined command
+      # - install_ansible
 
       # Add ssh keys with fingerprint
       - add_ssh_keys:
