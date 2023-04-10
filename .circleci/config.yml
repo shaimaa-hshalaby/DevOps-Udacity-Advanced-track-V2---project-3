@@ -210,13 +210,13 @@ jobs:
   configure-infrastructure:
     docker:
        #- image: cimg/base:stable
-       - image: python:3.9-alpine3.16
+       - image: cimg/python:3.10
     steps:
       # Checkout code from git
       - checkout    
-      # - install_aws_cli
+      - install_aws_cli
       # # install ansible from the predefined command
-      # - install_ansible
+      - install_ansible
 
       # Add ssh keys with fingerprint
       - add_ssh_keys:
@@ -225,12 +225,12 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache tar gzip
-            pip install ansible awscli
-            apk add openssh-client
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add --no-cache tar gzip
+      #       pip install ansible awscli
+      #       apk add openssh-client
       - run:
           name: Configure server
           command: |
@@ -249,22 +249,19 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-dependencies]
-      - run:
-          name: Install dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y awscli
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       sudo apt-get update
+      #       sudo apt-get install -y awscli
+      - install_aws_cli
       - run:
           name: Run migrations
           command: |
             cd backend
-
-            npm cache clean --force
-            rm -rf node_modules
-
             npm install
-            npm audit fix
             npm run migrations > migrations_dump.txt
+            cat migrations_dump.txt
             
       - run:
           name: Send migration results to KVdb
