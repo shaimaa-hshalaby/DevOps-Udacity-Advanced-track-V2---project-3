@@ -15,14 +15,17 @@ commands:
             sudo ./aws/install
 
    install_ansible:
-      description: install AWS CLI
+      description: install Ansible
       steps:
-       - run: 
-          command: |
-            sudo apt update
-            sudo apt install software-properties-common
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible
+        - run:
+           command: |
+            python3 -m pip install --user ansible
+      #  - run: 
+      #     command: |
+      #       sudo apt update
+      #       sudo apt install software-properties-common
+      #       sudo add-apt-repository --yes --update ppa:ansible/ansible
+      #       sudo apt install ansible
             
    install_nodejs:
         description: Install Node.js 13.8.0
@@ -130,7 +133,7 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm test
+            npm run test
       - notify_on_failure
 
   test-backend:
@@ -145,7 +148,7 @@ jobs:
           command: |
             cd backend
             npm install
-            npm test
+            npm run test
       - notify_on_failure
 
   scan-frontend:
@@ -159,10 +162,9 @@ jobs:
           name: Front-end Scan
           command: |
             cd frontend
-            npm install
-            npm audit fix --force --audit-level=critical
-            npm audit fix --audit-level=critical
-            npm audit --audit-level=critical
+             npm install
+             npm audit fix --force --audit-level=critical
+             npm audit --audit-level=critical
       - notify_on_failure
 
   scan-backend:
@@ -178,7 +180,7 @@ jobs:
             cd backend
             npm install
             npm audit fix --force --audit-level=critical
-            npm audit fix --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
       - notify_on_failure
 
