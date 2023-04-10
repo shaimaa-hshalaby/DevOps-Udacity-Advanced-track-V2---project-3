@@ -276,10 +276,15 @@ jobs:
       #       sudo apt-get install -y awscli
      
       - run:
-          name: Run migrations
+          name: npm install
           command: |
             cd backend
             npm install
+            
+      - run:
+          name: Run migrations
+          command: |
+            cd backend
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
             
