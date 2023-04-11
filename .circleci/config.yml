@@ -381,7 +381,7 @@ jobs:
       - run:
           name: Copy tar file
           command: |
-            cp ./backend/artifact.tar.gz ./.circleci/ansible/roles/deploy/files/artifact.tar.gz
+            cp ./backend/artifact.tar.gz ./.circleci/ansible/roles/deploy/files
             ls ./.circleci/ansible/roles/deploy/files
 
       - run:
