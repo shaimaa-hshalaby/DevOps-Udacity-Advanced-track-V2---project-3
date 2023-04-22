@@ -2,3 +2,5 @@ db instance identifier => udapeople-db
 master username => postgres
 password => postgres
 intial db name => glee
+
+D:\\testio\\parent-dir
