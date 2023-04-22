@@ -1,0 +1,20 @@
+github url
+==================
+https://github.com/shaimaa-hshalaby/DevOps-Udacity-Advanced-track-V2---project-3
+
+S3 bucket
+===================
+http://udapeople-d134923.s3-website-us-east-1.amazonaws.com
+
+cloudfront url
+===================
+
+
+backend url
+==============
+http://52.72.69.149:3030/
+
+
+prometheus server url
+=====================
+http://52.23.233.96:9090/graph

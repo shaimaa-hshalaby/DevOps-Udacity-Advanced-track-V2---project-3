@@ -1,0 +1,13 @@
+prometheus queries
+
+avg(rate(node_cpu_seconds_total{mode!="idle"}[1m])) by (instance)*100
+
+node_memory_Cached_bytes+node_memory_Buffers_bytes+node_memory_MemFree_bytes
+
+node_filesystem_free_bytes{device="/dev/root"}
+
+
+webhook of slack
+======================
+
+https://hooks.slack.com/services/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
