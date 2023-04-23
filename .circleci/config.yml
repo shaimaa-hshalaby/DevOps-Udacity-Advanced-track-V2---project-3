@@ -78,6 +78,9 @@ commands:
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
             echo "SUCCESS value is: $SUCCESS"
+            echo "URL is :  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>"
+            echo "KVDB bucket : ${KVDB_BUCKET}"
+            echo "workflow id: << parameters.Workflow_ID >>"
 
             # Logic for reverting the database state
             if [ "$(expr $SUCCESS)" -eq 1 ];
@@ -296,10 +299,13 @@ jobs:
       - run:
           name: Send migration results to KVdb
           command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
-            then
-              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
-            fi
+             command: |
+              if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+              then
+                curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              else
+                echo "No migrations are pending" 
+              fi
      # Here's where you will add some code to rollback on failure         
       - destroy-environment 
       - revert-migrations
