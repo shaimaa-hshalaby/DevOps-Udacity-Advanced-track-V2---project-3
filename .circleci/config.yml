@@ -67,16 +67,13 @@ commands:
 
    revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      Workflow_ID:
-        type: string    
     steps:
       - run:
           name: Revert migrations
           when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = $(curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
+            SUCCESS = $(curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -298,7 +295,8 @@ jobs:
               curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
      # Here's where you will add some code to rollback on failure         
-      - destroy-environment    
+      - destroy-environment 
+      - revert-migrations
       - notify_on_failure
       
 
@@ -341,7 +339,8 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
       # Here's where you will add some code to rollback on failure    
-      - destroy-environment    
+      - destroy-environment
+      - revert-migrations    
       - notify_on_failure  
                   
                     
@@ -399,7 +398,8 @@ jobs:
 
             # Here's where you will add some code to rollback on failure  
       
-      - destroy-environment    
+      - destroy-environment 
+      - revert-migrations   
       - notify_on_failure  
 
 
@@ -428,9 +428,9 @@ jobs:
             
             if curl -s $API_URL/api/status | grep "ok"
             then 
-              exit 0
-            else
               exit 1
+            else
+              exit 2
             fi
 
       - run:
@@ -444,7 +444,8 @@ jobs:
                 exit 1
             fi
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment    
+      - destroy-environment 
+      - revert-migrations   
       - notify_on_failure 
 
 
@@ -470,7 +471,8 @@ jobs:
                 --template-file .circleci/files/cloudfront.yml \
                 --stack-name udapeople-cloudfront \
                 --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"
-      - destroy-environment    
+      - destroy-environment 
+      - revert-migrations   
       - notify_on_failure 
 
   cleanup:
