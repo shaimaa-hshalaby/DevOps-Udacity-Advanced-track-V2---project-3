@@ -547,7 +547,9 @@ workflows:
       #         only: [main]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
-      - run-migrations
+      - run-migrations:
+            requires:
+              - "notify_on_success"
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
